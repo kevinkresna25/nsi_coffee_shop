@@ -3,6 +3,7 @@ npm-debug.log
 
 build
 db
+certs
 
 # Log, editor, OS files
 *.log

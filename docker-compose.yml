@@ -8,6 +8,8 @@ services:
       - "5000:5000"
     networks:
       - jokopi-net
+    volumes:
+      - ./certs:/app/certs:ro
     env_file:
       - ./jokopi-api/.env
     depends_on:
@@ -26,10 +28,14 @@ services:
       - jokopi-net
     volumes:
       - ./jokopi-react/docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./certs:/app/certs:ro
     environment:
       - PORT=80
-      - REACT_APP_BACKEND_HOST=http://localhost:5000
+      - REACT_APP_BACKEND_HOST=https://localhost:5000
       - REACT_APP_WEBSITE_NAME=Jokopi Coffee Shop
+      - HTTPS=true
+      - SSL_KEY_FILE=./certs/react.key
+      - SSL_CRT_FILE=./certs/react.crt
     depends_on:
       - jokopi-api
     restart: always
